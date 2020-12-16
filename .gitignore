@@ -4,3 +4,4 @@
 *.log
 *.gz
 .ipynb_checkpoints/
+__pycache__/
