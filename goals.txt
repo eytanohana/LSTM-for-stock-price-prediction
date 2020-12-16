@@ -1,0 +1,2 @@
+1. Add in ^VIX close and price of gold as features for training apple.
+2. Add explanations / intuition how LSTM works 
