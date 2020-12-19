@@ -57,11 +57,7 @@ class LSTM_linear_before_after(nn.Module):
         self.lstm = nn.LSTM(32, hidden_size, bidirectional=False)
         self.fc1 = nn.Linear(hidden_size, output_size)
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-      
-
-        
         self.h0 = torch.zeros(1, 1, hidden_size, device=self.device)
-        
         self.c0 = torch.zeros(1, 1, hidden_size, device=self.device)
 
     def forward(self, x):     
@@ -69,7 +65,6 @@ class LSTM_linear_before_after(nn.Module):
         y_relu = F.sigmoid(y)
         out_lstm, (self.h0, self.c0) = self.lstm(y_relu.view(len(x), 1, -1), (self.h0, self.c0))
         out = self.fc1(out_lstm.view(len(x), -1))
-        
         return out[-1][0]
 
     
@@ -79,10 +74,8 @@ class LSTM_2_layer(nn.Module):
 
         self.hidden_size = hidden_size
         self.num_layers = num_layers
-
         self.lstm = nn.LSTM(input_size, hidden_size, num_layers)
         self.fc = nn.Linear(hidden_size, output_size)
-        
         self.h0 = torch.zeros(num_layers, 1, hidden_size, device=device)
         self.c0 = torch.zeros(num_layers, 1, hidden_size, device=device)
 

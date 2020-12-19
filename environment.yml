@@ -120,4 +120,4 @@ dependencies:
     - threadpoolctl==2.1.0
     - urllib3==1.26.2
     - yfinance==0.1.55
-
+prefix: /home/eytan/miniconda/envs/data-science
