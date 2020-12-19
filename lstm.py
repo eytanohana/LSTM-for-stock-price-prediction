@@ -21,18 +21,27 @@ import torch.nn.functional as F
 import matplotlib.pyplot as plt
 
 
+def create_sequences(input_data, seq_len, close_index):
+    seq = []
+    L = len(input_data)
+    for i in range(L-seq_len):
+        train_seq = input_data[i:i+seq_len]
+        train_label = input_data[i+seq_len:i+seq_len+1][0,close_index]
+        seq.append((train_seq ,train_label))
+    return seq
+
+
 class LSTM(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):
         super(LSTM, self).__init__()
-
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self.hidden_size = hidden_size
         self.lstm = nn.LSTM(input_size, hidden_size)
         self.fc = nn.Linear(hidden_size, output_size)
         
         self.h0 = torch.zeros(1, 1, hidden_size, device=device)
-        
         self.c0 = torch.zeros(1, 1, hidden_size, device=device)
-
+        
     def forward(self, x):        
         out_lstm, (self.h0, self.c0) = self.lstm(x.view(len(x), 1, -1), (self.h0, self.c0))
         out = self.fc(out_lstm.view(len(x), -1))
