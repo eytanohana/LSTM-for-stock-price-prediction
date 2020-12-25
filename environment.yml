@@ -1,4 +1,4 @@
-name: lstm_stocks2
+name: lstm_stocks
 channels:
   - defaults
   - https://conda.anaconda.org/trax
